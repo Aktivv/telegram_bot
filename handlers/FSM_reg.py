@@ -19,7 +19,7 @@ class RegisterUser(StatesGroup):
 async def fsm_start(message: types.Message):
     await RegisterUser.fullname.set()
     await message.answer(text="Введите ФИО:",
-                         reply_markup=InlineKeyboardMarkup(inline_keyboard=buttons.cancel)
+                         reply_markup=buttons.cancel
                          )
 
 
@@ -78,7 +78,8 @@ async def load_photo(message: types.Message, state: FSMContext):
                                        f"Возраст - {data['age']}\n"
                                        f"Адрес - {data['adress']}\n"
                                        f"Номер - {data['phone']}\n"
-                                       f"Почта - {data['email']}",
+                                       f"Почта - {data['email']}\n\n"
+                                       f"Данные верны?",
                                reply_markup=keyboard)
 
 
@@ -110,4 +111,4 @@ def register_fsm_for_user(dp: Dispatcher):
     dp.register_message_handler(load_phone, state=RegisterUser.phone)
     dp.register_message_handler(load_email, state=RegisterUser.email)
     dp.register_message_handler(load_photo, state=RegisterUser.photo, content_types=['photo'])
-    dp.register_message_handler(submit, state=RegisterUser.submit)
+    dp.register_callback_query_handler(submit, state=RegisterUser.submit)

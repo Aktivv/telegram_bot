@@ -16,8 +16,8 @@ async def on_shutdown(_):
 
 
 commands.register_commands(dp)
-quiz.register_quiz(dp)
 FSM_reg.register_fsm_for_user(dp)
+quiz.register_quiz(dp)
 
 # Эхо функция - вызывать самым последним
 echo.register_echo(dp)
